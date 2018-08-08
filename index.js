@@ -19,10 +19,20 @@ server.post("/zoos", (req, res) => {
 })
 
 server.get('/zoos', (req, res) => {
-  db.select('name')
-    .from('zoos')
-    .then(response => res.status(200).json(response))
+  db.select()
+    .from('Zoos')
+    .then(records => res.status(200).json(records))
     .catch(err => res.status(500).json(err));
+})
+
+server.get("/zoos/:id", (req, res) => {
+  const { id } = req.params;
+  
+  db.select()
+    .from('Zoos')
+    .where({id: id})
+    .then(record => res.status(200).send(record))
+    .catch(err => res.status(500).send(err));
 })
 
 const port = 3300;
